@@ -123,10 +123,10 @@ int menu_main(void);											// Hauptmenü
 int menu_input(void);											// Menü für den Eingabemodus der Eingabe
 
 void data_input_prime(double measurements[MAX_MEASUREMENTS][2], char* currDir, config* user_config_pt);		// Hauptfunktion Dateneingabe
-int data_input_mode1(double measurements[100][2], int* data_nb_p);															// Dateneingabe: Modus 1
-int data_input_mode2(double measurements[100][2], int* data_nb_p);															// Dateneingabe: Modus 2
+int data_input_mode1(double measurements[100][2]);															// Dateneingabe: Modus 1
+int data_input_mode2(double measurements[100][2]);															// Dateneingabe: Modus 2
 
-bool data_change(double[MAX_MEASUREMENTS][2], int decpts, int decpts_status, int* data_nb_p);	// Daten verändern (Eingegebene Messdaten)
+bool data_change(double[MAX_MEASUREMENTS][2], int decpts, int decpts_status);	// Daten verändern (Eingegebene Messdaten)
 
 void data_recreate(double measurements[MAX_MEASUREMENTS][2], config user_config, char* currDir, bool* data_changed_pt);
 
@@ -143,13 +143,13 @@ void disp_help_settings(void);																						// Hilfemenü für Einstellung
 void disp_settings_main(config user_config);																		// Eingestellte Einstellungen anzeigen, als eigenständige Anzeige
 void disp_settings_funct(config user_config);																		// (" - - "), Innerhalb einer anderen Funktion
 
-void data_output_main(double[MAX_MEASUREMENTS][2], int decimalpoints, int decpts_status, int* data_nb_p);							// Datenausgabe im Hauptmenü
-void data_output_funct(double[MAX_MEASUREMENTS][2], int decimalpoints, int decpts_status, int* data_nb_p);							// Datenausgabe aus Programmspeicher (in Funktionen)
-void data_rearrange(double measurements[MAX_MEASUREMENTS][2], int decpts, int decpts_status, bool* data_changed, int* data_nb_p);	// Daten neu ordnen
+void data_output_main(double[MAX_MEASUREMENTS][2], int decimalpoints, int decpts_status);							// Datenausgabe im Hauptmenü
+void data_output_funct(double[MAX_MEASUREMENTS][2], int decimalpoints, int decpts_status);							// Datenausgabe aus Programmspeicher (in Funktionen)
+void data_rearrange(double measurements[MAX_MEASUREMENTS][2], int decpts, int decpts_status, bool* data_changed);	// Daten neu ordnen
 
 //--<Dateifunktionen>----------------------------------------------------------------------------------------
-void data_save_formatted(double arrayToSave[MAX_MEASUREMENTS][2], char* currDir, int decpts, int decpts_status, int* data_nb_p);	// Speichert die eingegebenen Messdaten in eine *.txt- Datei in der Art und Weise, wie sie zusammengehören
-int data_save_bin(double arrayToSave[MAX_MEASUREMENTS][2], char* currDir, int decpts, int* data_nb);								// Speichert die eingegebenen Daten binär ein um sie später wieder einlesen zu können
+void data_save_formatted(double arrayToSave[MAX_MEASUREMENTS][2], char* currDir, int decpts, int decpts_status);	// Speichert die eingegebenen Messdaten in eine *.txt- Datei in der Art und Weise, wie sie zusammengehören
+int data_save_bin(double arrayToSave[MAX_MEASUREMENTS][2], char* currDir, int decpts);								// Speichert die eingegebenen Daten binär ein um sie später wieder einlesen zu können
 void data_save_latex(double measurements[MAX_MEASUREMENTS][2], char* currDir, config config_container);				// Erstellt eine LaTeX- Datei mit den eingegebenen (sich im Speicher befindenden) Daten
 config data_load(double arrayToSave[MAX_MEASUREMENTS][2], char* currDir, config config_container);					// Lädt die entsprechenden Daten, falls vorhanden
 void data_save_config(char* currentDirectory, config config_container);

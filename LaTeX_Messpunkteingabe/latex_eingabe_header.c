@@ -710,7 +710,7 @@ void data_input_prime(double measurements[MAX_MEASUREMENTS][2], char* currDir, c
 					// Der Benutzer will beides jeweils entsprechend eingeben
 					if (userInput == 1)
 					{
-						userInputState = data_input_mode1(measurements, &(user_config_pt->data_nb));
+						userInputState = data_input_mode1(measurements);
 						if (!userInputState)
 						{
 							return;
@@ -721,7 +721,7 @@ void data_input_prime(double measurements[MAX_MEASUREMENTS][2], char* currDir, c
 				// Der Benutzer will erst die Datenpunkte (x- Achse), und dann die zugehörenden Werte (y- Achse) eingeben
 				if (userInput == 2)
 				{
-					userInputState = data_input_mode2(measurements, &(user_config_pt->data_nb));
+					userInputState = data_input_mode2(measurements);
 					if (!userInputState)
 					{
 						return;
@@ -729,10 +729,10 @@ void data_input_prime(double measurements[MAX_MEASUREMENTS][2], char* currDir, c
 					functionState = false;
 				}
 
-				data_save_formatted(measurements, currDir, user_config_pt->decpts_nb, user_config_pt->decpts_status, &(user_config_pt->data_nb));
+				data_save_formatted(measurements, currDir, user_config_pt->decpts_nb, user_config_pt->decpts_status);
 				drawLineCustom(196);
 				printf("Ihre eingegebenen Datenwerte:\n\n");
-				data_output_funct(measurements, user_config_pt->decpts_nb, user_config_pt->decpts_status, &(user_config_pt->data_nb));
+				data_output_funct(measurements, user_config_pt->decpts_nb, user_config_pt->decpts_status);
 
 				STOPP
 
@@ -785,14 +785,13 @@ void data_input_prime(double measurements[MAX_MEASUREMENTS][2], char* currDir, c
 
 }
 
-int data_input_mode1(double measurements_inFunc[MAX_MEASUREMENTS][2], int* data_nb)
+int data_input_mode1(double measurements_inFunc[MAX_MEASUREMENTS][2])
 {
 
-	int measureCount = *data_nb;
+	int measureCount = 0;
 
 	printf("Wie viele Datenpunkte m%cchten Sie eingeben?\nIhre Wahl:\t", 148);
 	measureCount = (int)safe_input_double();
-	*data_nb = measureCount;
 
 	/*scanf("%i", &measureCount);*/
 	//measureCount = menu_safe_input(0, 1);
@@ -824,7 +823,7 @@ int data_input_mode1(double measurements_inFunc[MAX_MEASUREMENTS][2], int* data_
 
 }
 
-int data_input_mode2(double measurements_inFunc[MAX_MEASUREMENTS][2], int* data_nb)
+int data_input_mode2(double measurements_inFunc[MAX_MEASUREMENTS][2])
 {
 
 	int measureCount = 0;
@@ -832,7 +831,6 @@ int data_input_mode2(double measurements_inFunc[MAX_MEASUREMENTS][2], int* data_
 	printf("Wie viele Datenpunkte m%cchten Sie eingeben?\nIhre Wahl:\t", 148);
 	//scanf("%i", &measureCount);
 	measureCount = (int)safe_input_double();
-	*data_nb = measureCount;
 
 	if (measureCount <= 0)
 	{
@@ -860,13 +858,13 @@ int data_input_mode2(double measurements_inFunc[MAX_MEASUREMENTS][2], int* data_
 	return 1;
 }
 
-void data_output_main(double measurements[MAX_MEASUREMENTS][2], int decimalpts, int decpts_status, int* data_nb)
+void data_output_main(double measurements[MAX_MEASUREMENTS][2], int decimalpts, int decpts_status)
 {
 	int measureCount = 0;
 	double check_content = 0;
 
 	// Länge des
-	measureCount = *data_nb;
+	measureCount = getCountNumb(measurements);
 
 	HEADER
 
@@ -924,10 +922,10 @@ void data_output_main(double measurements[MAX_MEASUREMENTS][2], int decimalpts, 
 
 }
 
-void data_output_funct(double measurements[MAX_MEASUREMENTS][2], int decimalpts, int decpts_status, int* data_nb)
+void data_output_funct(double measurements[MAX_MEASUREMENTS][2], int decimalpts, int decpts_status)
 {
 
-	int measureCount = *data_nb;
+	int measureCount = 0;
 
 	measureCount = getCountNumb(measurements);
 
@@ -965,7 +963,7 @@ void data_output_funct(double measurements[MAX_MEASUREMENTS][2], int decimalpts,
 
 }
 
-bool data_change(double measurements[MAX_MEASUREMENTS][2], int decpts, int decpts_status, int* data_nb)
+bool data_change(double measurements[MAX_MEASUREMENTS][2], int decpts, int decpts_status)
 {
 	int measurementCount = 0;
 	int userInput_Nb = 0;
@@ -974,7 +972,7 @@ bool data_change(double measurements[MAX_MEASUREMENTS][2], int decpts, int decpt
 	bool input_already = false;
 	bool change_done = false;
 
-	measurementCount = *data_nb;
+	measurementCount = getCountNumb(measurements);
 
 	HEADER
 
@@ -997,7 +995,7 @@ bool data_change(double measurements[MAX_MEASUREMENTS][2], int decpts, int decpt
 				}
 
 				printf("Ihre Daten:\n\n");
-				data_output_funct(measurements, decpts, decpts_status, data_nb);
+				data_output_funct(measurements, decpts, decpts_status);
 				NEWLINE
 
 					drawLineCustom(196);
@@ -1022,7 +1020,7 @@ bool data_change(double measurements[MAX_MEASUREMENTS][2], int decpts, int decpt
 					HEADER
 
 						printf("Ihre Daten:\n\n");
-					data_output_funct(measurements, decpts, decpts_status, data_nb);
+					data_output_funct(measurements, decpts, decpts_status);
 					NEWLINE
 						drawLineCustom(196);
 
@@ -1033,13 +1031,13 @@ bool data_change(double measurements[MAX_MEASUREMENTS][2], int decpts, int decpt
 					if (userInput_Choice == 1)
 					{
 						printf("Geben Sie den neuen Datenpunkt ein:\t");
-						userInput_value = fgetc(stdin);
+						userInput_value = safe_input_double();
 						measurements[userInput_Nb - 1][0] = userInput_value;
 					}
 					if (userInput_Choice == 2)
 					{
 						printf("Geben Sie den neuen Datenwert ein:\t");
-						userInput_value = fgetc(stdin);
+						userInput_value = safe_input_double();
 						measurements[userInput_Nb - 1][1] = userInput_value;
 					}
 					NEWLINE
@@ -1047,7 +1045,7 @@ bool data_change(double measurements[MAX_MEASUREMENTS][2], int decpts, int decpt
 						HEADER
 
 						printf("Ihre neuen Daten:\n\n");
-					data_output_funct(measurements, decpts, decpts_status, data_nb);
+					data_output_funct(measurements, decpts, decpts_status);
 					change_done = true;
 				}
 
@@ -1061,7 +1059,7 @@ bool data_change(double measurements[MAX_MEASUREMENTS][2], int decpts, int decpt
 
 }
 
-void data_rearrange(double measurements[MAX_MEASUREMENTS][2], int decpts, int decpts_status, bool* data_changed, int* data_nb)
+void data_rearrange(double measurements[MAX_MEASUREMENTS][2], int decpts, int decpts_status, bool* data_changed)
 {
 	double data_buffer[MAX_MEASUREMENTS][2] = { 0 };
 
@@ -1073,7 +1071,7 @@ void data_rearrange(double measurements[MAX_MEASUREMENTS][2], int decpts, int de
 	int userInput = -1;			// Noch nichts eingegeben
 
 								// Anzahl der Daten ermitteln
-	measureCount = *data_nb;
+	measureCount = getCountNumb(measurements);
 
 	// Keine Daten gefunden
 	if (measureCount <= 0)
@@ -1113,7 +1111,7 @@ void data_rearrange(double measurements[MAX_MEASUREMENTS][2], int decpts, int de
 		HEADER
 
 			printf("Ihre Daten vor dem Sortieren:\n\n");
-		data_output_funct(measurements, decpts, decpts_status, data_nb);
+		data_output_funct(measurements, decpts, decpts_status);
 		drawLineCustom(196);
 
 		// Datenpunkte: Größe aufsteigend ordnen
@@ -1241,7 +1239,7 @@ void data_rearrange(double measurements[MAX_MEASUREMENTS][2], int decpts, int de
 		}
 
 		printf("Ihre Daten nach dem Sortieren:\n\n");
-		data_output_funct(measurements, decpts, decpts_status, data_nb);
+		data_output_funct(measurements, decpts, decpts_status);
 
 		*data_changed = true;
 
@@ -1420,7 +1418,7 @@ void toggle_decpts(int* decpts_pointer)
 
 //--<Dateifunktionen>----------------------------------------------------------------------------------------
 
-void data_save_formatted(double arrayToSave[MAX_MEASUREMENTS][2], char* currDir, int decpts, int decpts_status, int* data_nb)
+void data_save_formatted(double arrayToSave[MAX_MEASUREMENTS][2], char* currDir, int decpts, int decpts_status)
 {
 	bool fileStatus = true;
 
@@ -1450,7 +1448,7 @@ void data_save_formatted(double arrayToSave[MAX_MEASUREMENTS][2], char* currDir,
 	else
 	{
 		// Anzahl der Daten ermitteln
-		measureCount = *data_nb;
+		measureCount = getCountNumb(arrayToSave);
 		if (decpts_status == decpts_both)
 		{
 			for (int i = 0; i < measureCount; i++)
@@ -1490,7 +1488,7 @@ void data_save_formatted(double arrayToSave[MAX_MEASUREMENTS][2], char* currDir,
 	fclose(filept);
 }
 
-int data_save_bin(double arrayToSave[MAX_MEASUREMENTS][2], char* currDir, int decpts, int* data_nb)
+int data_save_bin(double arrayToSave[MAX_MEASUREMENTS][2], char* currDir, int decpts)
 {
 
 	//-- Variablendeklaration --------------------------------------------------------->>>>
@@ -1501,7 +1499,7 @@ int data_save_bin(double arrayToSave[MAX_MEASUREMENTS][2], char* currDir, int de
 	int saveCount = 0;
 	int tryCount = 0;
 	int measureCount = 0;
-	measureCount = *data_nb;
+	measureCount = getCountNumb(arrayToSave);
 
 	datenpaar pairsOfData[MAX_MEASUREMENTS] = { 0, 0 };
 
@@ -1569,7 +1567,7 @@ void data_save_latex(double measurements[MAX_MEASUREMENTS][2], char* currDir, co
 
 	char currDir_filename[200] = { 0 };			// Aktueller Ordner + Pfad | + Dateiname
 
-	measureCount = config_container.data_nb;	// Anzahl der eingetragenen Daten ermitteln
+	measureCount = getCountNumb(measurements);	// Anzahl der eingetragenen Daten ermitteln
 
 	// Dateiname + Dateipfad am aktuellen Ort erstellen
 	strcpy(currDir_filename, currDir);
@@ -1928,7 +1926,7 @@ void data_recreate(double measurements[MAX_MEASUREMENTS][2], config user_config,
 	int measureCount = 0;
 
 	// Abfrage, ob Daten vorhanden sind
-	measureCount = user_config.data_nb;
+	measureCount = getCountNumb(measurements);
 
 	HEADER
 		// Wenn Daten vorhanden sind
@@ -1957,7 +1955,7 @@ void data_recreate(double measurements[MAX_MEASUREMENTS][2], config user_config,
 
 			printf("Dies sind Ihre eingegebenen Datenwerte:\n\n");
 
-		data_output_funct(measurements, user_config.decpts_nb, user_config.decpts_status, &(user_config.data_nb));
+		data_output_funct(measurements, user_config.decpts_nb, user_config.decpts_status);
 		NEWLINE
 			drawLineCustom(196);
 
@@ -1976,7 +1974,7 @@ void data_recreate(double measurements[MAX_MEASUREMENTS][2], config user_config,
 	if (userAgree_2)
 	{
 
-		data_save_formatted(measurements, currDir, user_config.decpts_nb, user_config.decpts_status, &(user_config.data_nb));
+		data_save_formatted(measurements, currDir, user_config.decpts_nb, user_config.decpts_status);
 		data_save_latex(measurements, currDir, user_config);
 		*data_changed_pt = 0;
 		HEADER

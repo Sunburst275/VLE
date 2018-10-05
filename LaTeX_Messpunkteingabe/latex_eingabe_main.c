@@ -78,15 +78,15 @@ n.A.
 // + GROßES PROBLEM: stdin lässt sich nicht leeren -> safe_input_double() spackt rum... -> LÖSUNG: Kein scanf() benutzen, immer fgets() und fgetc benutzen, um im Eingabepuffer nicht immer Müll zu lassen, und am Ende der Funktion Eingabepuffer leeren. 
 
 // TODO (v1.4)
-// + Nummer an Datensätzen nun ins Einstellungs- Struct speichern
-// + Alle enstprechenden Funktionen an obiges Anpassen
+// - Nummer an Datensätzen nun ins Einstellungs- Struct speichern
+// - Alle enstprechenden Funktionen an obiges Anpassen
 // + Dateiendungen an "*.vledat" und "*.vleset" anpassen
 // - Im Einstellungs- Menü oben rechts "Einstellungen" (wie im Hilfemenü) anzeigen lassen
 // - Versionsnummer im Header entsprechend wie "Hilfe" und "Einstellungen" oben rechts anzeigen lassen
 // + PROBLEM: Sofort nach dem Starten gibt es Probleme beim Abspeichern wenn man direkt beendet (Config wird nicht richtig geladen?)
-// - Change- Function krüppelt
+// + Change- Function krüppelt
 // - Change -> Löschen- Funktion einbauen
-// - 
+// + GitHub aufsetzen
 
 
 //===[ Einzubindende Bibliotheken ]====================================================================================================
@@ -168,9 +168,9 @@ int main(int argc, char* argv[])
 			default:	/*Loop neu starten*/																							break;
 			case 0:		programState = false;																							break;		// Programm beenden
 			case 1:		data_input_prime(measurements, currDir_addDir, user_config_pt);													break;		// Messdaten eingeben
-			case 2:		data_output_main(measurements, user_config.decpts_nb, user_config.decpts_status, &(user_config.data_nb));								break;		// Messdaten ausgeben
-			case 3:		data_changed = data_change(measurements, user_config.decpts_nb, user_config.decpts_status, &(user_config.data_nb));						break;		// Messdaten verändern (Messpunkt oder Messwert)
-			case 4:		data_rearrange(measurements, user_config.decpts_nb, user_config.decpts_status, data_changed_pt, &(user_config.data_nb));				break;		// Daten ordnen
+			case 2:		data_output_main(measurements, user_config.decpts_nb, user_config.decpts_status);								break;		// Messdaten ausgeben
+			case 3:		data_changed = data_change(measurements, user_config.decpts_nb, user_config.decpts_status);						break;		// Messdaten verändern (Messpunkt oder Messwert)
+			case 4:		data_rearrange(measurements, user_config.decpts_nb, user_config.decpts_status, data_changed_pt);				break;		// Daten ordnen
 			case 5:		data_recreate(measurements, user_config, currDir_addDir, data_changed_pt);										break;		// Dateien (neu) erstellen
 			//case 6:		label_input(user_config.label1, user_config.label2, user_config.label_tabular);	break;
 
@@ -253,7 +253,7 @@ int main(int argc, char* argv[])
 
 			if (userInput_end == 1)
 			{
-				data_save_formatted(measurements, currDir_addDir, user_config.decpts_nb, user_config.decpts_status, &(user_config.data_nb));
+				data_save_formatted(measurements, currDir_addDir, user_config.decpts_nb, user_config.decpts_status);
 				data_save_latex(measurements, currDir_addDir, user_config);
 				drawLineCustom(196);
 				printf("Dateien erfolgreich erstellt.\n\n");
@@ -272,7 +272,7 @@ int main(int argc, char* argv[])
 
 	//--< Wahres Ende des Programms >------------------------------------------------------------------------------------------------->>>>
 
-	data_save_bin(measurements, currDir_addDir, user_config.decpts_nb, &(user_config.data_nb));
+	data_save_bin(measurements, currDir_addDir, user_config.decpts_nb);
 	data_save_config(currDir_addDir, user_config);
 
 	NEWLINE
