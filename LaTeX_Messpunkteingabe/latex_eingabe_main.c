@@ -113,11 +113,9 @@ int main(int argc, char* argv[])
 		currDir_filename_latex[200] = { 0 };	// Aktueller Pfad + Ordner | + Dateiname (LaTeX- Datei)
 
 	//----- Nutzerrelevante Variablen
-	config user_config = { 3, 0, 0, 0, 0, 0 };
+	config user_config = { 1, 3, 0, 0, 0, 0, 0 };
 
 	config* user_config_pt = &user_config;
-
-	user_config.data_nb = 0;	// Standard für data_nb damit keine Probleme auftreten
 
 	double measurements[MAX_MEASUREMENTS][2] = { 0 };	// Array zur Abspeicherung der Daten
 
