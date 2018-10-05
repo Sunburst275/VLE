@@ -1033,13 +1033,13 @@ bool data_change(double measurements[MAX_MEASUREMENTS][2], int decpts, int decpt
 					if (userInput_Choice == 1)
 					{
 						printf("Geben Sie den neuen Datenpunkt ein:\t");
-						userInput_value = fgetc(stdin);
+						userInput_value = safe_input_double();
 						measurements[userInput_Nb - 1][0] = userInput_value;
 					}
 					if (userInput_Choice == 2)
 					{
 						printf("Geben Sie den neuen Datenwert ein:\t");
-						userInput_value = fgetc(stdin);
+						userInput_value = safe_input_double();
 						measurements[userInput_Nb - 1][1] = userInput_value;
 					}
 					NEWLINE
