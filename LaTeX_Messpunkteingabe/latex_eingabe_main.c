@@ -66,8 +66,8 @@ n.A.
 // TODO (v1.3)
 // + Einstellungen werden mit abgespeichert und übernommen wenn geladen wird
 // x Ausgabename des Programms zu "VLE" mit Versionsnummer ändern  
-// - LaTeX - Einstellung: 1, 2 oder 3 Spaltenpaare-> Togglen (und vllt.Bsp.- Anzeige, Endreihe eingeben lassen)
-// - Icons (Alle Größen) bearbeiten
+// x LaTeX - Einstellung: 1, 2 oder 3 Spaltenpaare-> Togglen (und vllt.Bsp.- Anzeige, Endreihe eingeben lassen)
+// x Icons (Alle Größen) bearbeiten
 // + Wenn im Hilfebildschirm (Haupt- und Einstellungshilfebildschirm) -> Oben rechts in der Ecke anzeigen
 // + Sichere Eingabe bei Zahleneingaben > 9 und < 0 !!!
 // ? MATLAB- Plotcode als Option hinzufügen
@@ -84,10 +84,14 @@ n.A.
 // - Im Einstellungs- Menü oben rechts "Einstellungen" (wie im Hilfemenü) anzeigen lassen
 // - Versionsnummer im Header entsprechend wie "Hilfe" und "Einstellungen" oben rechts anzeigen lassen
 // + PROBLEM: Sofort nach dem Starten gibt es Probleme beim Abspeichern wenn man direkt beendet (Config wird nicht richtig geladen?)
-// - Change- Function krüppelt
-// - Change -> Löschen- Funktion einbauen
-// - 
-
+// + Change- Function krüppelt
+// ? Change -> Löschen- Funktion einbauen
+// + Datensätze werden corrupted (beim speichern in *.bin?) (Problem hat sich magisch aufgelöst (keine Ahnung warum))
+// + LaTeX- Code wird nicht ordentlich erstellt (Anmerkung: LaTeX- Kommandos können eingefügt werden (in den Text) wie z.B.: Erste Zeile: "Impedanz [$\Omega$]" <- Sehr praktisch!!!) Problemlösung: coloumn_nb war auf 0, muss aber für die einwandfreie Funktion der LaTeX- Code- Erstellung auf 1 sein
+// - LaTeX- Code- Erstellung mit Umlauterkennung erstellen
+// ? LaTeX - Einstellung: 1, 2 oder 3 Spaltenpaare-> Togglen (und vllt.Bsp.- Anzeige, Endreihe eingeben lassen)
+// - Icons (Alle Größen) bearbeiten
+// + Lade-/Speicherfunktionen mit adäquaten Ausgabemeldungen versehen
 
 //===[ Einzubindende Bibliotheken ]====================================================================================================
 #include "latex_eingabe_header.h"
@@ -113,7 +117,7 @@ int main(int argc, char* argv[])
 		currDir_filename_latex[200] = { 0 };	// Aktueller Pfad + Ordner | + Dateiname (LaTeX- Datei)
 
 	//----- Nutzerrelevante Variablen
-	config user_config = { 1, 3, 0, 0, 0, 0, 0 };
+	config user_config = { 0, 3, 0, 0, 0, 0, 0 };
 
 	config* user_config_pt = &user_config;
 
@@ -150,7 +154,7 @@ int main(int argc, char* argv[])
 
 	user_config = data_load(measurements, currDir_addDir, user_config);
 
-	user_config.column_nb = 0;	// Standard um Probleme während des Bearbeitens zu vermeiden
+	user_config.column_nb = 1;	// Standard um Probleme während des Bearbeitens zu vermeiden
 
 	do
 	{

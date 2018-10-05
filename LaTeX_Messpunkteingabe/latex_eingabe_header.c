@@ -929,8 +929,6 @@ void data_output_funct(double measurements[MAX_MEASUREMENTS][2], int decimalpts,
 
 	int measureCount = *data_nb;
 
-	measureCount = getCountNumb(measurements);
-
 	//printf("Ihre Daten:\n\n");
 	printf("###\tDatenpunkt\t\tDatenwert\n");
 
@@ -1547,9 +1545,9 @@ int data_save_bin(double arrayToSave[MAX_MEASUREMENTS][2], char* currDir, int de
 	}
 
 	drawLineCustom(196);
-	printf("Speichervorgang:\n");
-	printf("Schreibversuche Insgesamt:\t%i\n", tryCount);
-	printf("Schreibversuche Erfolgreich:\t%i\n", saveCount);
+	printf("Speichervorgang Datens%ctze:\n", 132);
+	printf("- Schreibversuche Insgesamt:\t%i\n", tryCount);
+	printf("- Schreibversuche Erfolgreich:\t%i\n", saveCount);
 
 	//fclose(filept_bin);
 	return 0;
@@ -1647,31 +1645,22 @@ void data_save_latex(double measurements[MAX_MEASUREMENTS][2], char* currDir, co
 			//fprintf(file_latex_pt, "\n");
 		}
 
-		if (config_container.column_nb == 2)
-		{
-			fprintf(file_latex_pt, "\t\\begin{tabular}{|l|l|l|l|}\\hline\n");
-
-			// Überschriften bzw. Bezeichnungen in den Spalten
-			// Erstes Spaltenpaar
-			fprintf(file_latex_pt, "\t\\textbf{");
-			fputs(config_container.label1, file_latex_pt);
-			fprintf(file_latex_pt, "}&\\textbf{");
-			fputs(config_container.label2, file_latex_pt);
-			// Zweites Spaltenpaar
-			fprintf(file_latex_pt, "}&\\textbf{");
-			fputs(config_container.label1, file_latex_pt);
-			fprintf(file_latex_pt, "}&\\textbf{");
-			fputs(config_container.label2, file_latex_pt);
-
-			fprintf(file_latex_pt, "} \\\\ \\hline \\hline\n");
-
-
-
-
-
-
-
-		}
+		//if (config_container.column_nb == 2)
+		//{
+		//	fprintf(file_latex_pt, "\t\\begin{tabular}{|l|l|l|l|}\\hline\n");
+		//	// Überschriften bzw. Bezeichnungen in den Spalten
+		//	// Erstes Spaltenpaar
+		//	fprintf(file_latex_pt, "\t\\textbf{");
+		//	fputs(config_container.label1, file_latex_pt);
+		//	fprintf(file_latex_pt, "}&\\textbf{");
+		//	fputs(config_container.label2, file_latex_pt);
+		//	// Zweites Spaltenpaar
+		//	fprintf(file_latex_pt, "}&\\textbf{");
+		//	fputs(config_container.label1, file_latex_pt);
+		//	fprintf(file_latex_pt, "}&\\textbf{");
+		//	fputs(config_container.label2, file_latex_pt);
+		//	fprintf(file_latex_pt, "} \\\\ \\hline \\hline\n");
+		//}
 
 		// Ende der Tabelle
 		fprintf(file_latex_pt, "\t\\end{tabular}\n");
@@ -1684,10 +1673,6 @@ void data_save_latex(double measurements[MAX_MEASUREMENTS][2], char* currDir, co
 			fprintf(file_latex_pt, "}\n");
 		}
 		fprintf(file_latex_pt, "\\end{table");
-		//if (!has_label)
-		//{
-		//	fprintf(file_latex_pt, "*");
-		//}
 		fprintf(file_latex_pt, "}\n");
 
 
@@ -1710,7 +1695,7 @@ void data_save_config(char* currentDirectory, config config_to_save)
 
 	config* config_pt = &config_to_save;
 
-	bool config_success = -1;
+	bool config_success = 0;
 
 	strcpy(currDir_filename, currentDirectory);
 	strcat(currDir_filename, "\\");
@@ -1733,6 +1718,17 @@ void data_save_config(char* currentDirectory, config config_to_save)
 		config_success = (int)fwrite(config_pt, sizeof(config), 1, filept_config);
 	}
 
+	printf("\n");
+	printf("Speichervorgang Einstellungen:\n");
+	if (config_success == 0)
+	{
+		printf("- Konfiguration konnte nicht gespeichert werden\n");
+	}
+	else
+	{
+		printf("- Konfiguration erfolgreich abgespeichert\n");
+	}
+
 	fclose(filept_config);
 
 }
@@ -1751,7 +1747,7 @@ config data_load(double dat_array[MAX_MEASUREMENTS][2], char* currDir, config co
 	int i = 0;
 
 	bool userChoice = false,
-		config_success = -1;
+		config_success = 0;
 
 	datenpaar pairsOfData[MAX_MEASUREMENTS] = { 0, 0 };
 	datenpaar* pairsOfData_pt[MAX_MEASUREMENTS] = { NULL };
@@ -1898,12 +1894,19 @@ config data_load(double dat_array[MAX_MEASUREMENTS][2], char* currDir, config co
 		}
 
 		drawLineCustom(196);
-		printf("Ladevorgang:\n");
-		printf("Leseversuche Insgesamt:\t\t%i\n", tryCount);
-		printf("Leseversuche Erfolgreich:\t%i\n", loadCount);
-		if (config_success)
+		printf("Ladevorgang Datens%ctze:\n", 132);
+		printf("- Leseversuche Insgesamt:\t%i\n", tryCount);
+		printf("- Leseversuche Erfolgreich:\t%i\n", loadCount);
+		
+		printf("\n");
+		printf("Ladevorgang Einstellungen:\n");
+		if (config_success == 0)
 		{
-			printf("Konfiguration erfolgreich übernommen\n");
+			printf("- Konfiguration konnte nicht %cbernommen werden\n", 129);
+		}
+		else
+		{
+			printf("- Konfiguration erfolgreich %cbernommen\n", 129);
 		}
 
 		//fclose(filept_bin); //<--- DER HAT GROßEN ÄRGER GEMACHT. WARUM? Keine Ahnung...
