@@ -24,23 +24,78 @@ n.A.
 #define CONSOLE_HEIGHT 25						// Konsolenhöhe Standard: 25
 #define CONSOLE_WIDTH 80						// Konsolenbreite Standard: 80
 
+//--<Generell>-----------------------------------------------------------------------------------------------
 #define MAX_MEASUREMENTS 100					// Maximale Anzahl an Messwerten/-punkten
 #define STD_STRLEN 50							// Hier Standardlänge für Strings (für die Labels/Bezeichnungen der Tabelle)
 
+//--<Dateien>------------------------------------------------------------------------------------------------
 #define FILENAME_FORM_DATA "user_data.txt"				// Name für Datei (formatierte Daten) // Variabel
-#define FILENAME_BIN_DATA "bin_data.vledat"				// Name für Datei (gespeicherte Daten) // Variabel // Datenpunkte- und werte
+#define FILENAME_BIN_DATA "bin_data.vledat"				// Name für Datei (gespeicherte Daten) // Variabel // Datenpunkte- und Werte
 #define FILENAME_SET_CONFIG "bin_config.vleset"			// Name für Datei (Gespeicherte Einstellungen)
 #define FILENAME_LATEX_CODE "latex_code.txt"			// Name für Datei (LaTeX- Code)
 #define FOLDERNAME "VLE - Eingegebene Daten"				// Name für den Ordner, in dem die Dateien abgespeichert werden
 
+//--<Hilfestellungen>----------------------------------------------------------------------------------------
 #define STOPP stopp();							// Stoppt das Programm mit bestimmter Ausgabe auf der Konsole (um es anschaulicher zu machen)
 #define NEWLINE printf("\n");					// Setzt den Cursor auf die nächste Linie in der Konsole
+
+//--<Menüfuhrungsstrings>------------------------------------------------------------------------------------
+
+// Main -> ...
+#define CAT_MAIN "Hauptmenue"
+#define CAT_MAIN_DATAOUTPUT "Hauptmenue > Daten ausgeben"
+#define CAT_MAIN_DATACHANGE "Hauptmenue > Daten veraendern"
+#define CAT_MAIN_DATAREARRANGE "Hauptmenue > Daten ordnen"
+#define CAT_MAIN_REBUILD "Hauptmenue > Dateien (neu) erstellen"
+
+#define CAT_MAIN_DATAINPUT "Hauptmenue > Daten eingeben "
+#define CAT_MAIN_DATAINPUT_DECPTS "Hauptmenue > Daten eingeben > Dezimalstellen "
+#define CAT_MAIN_DATAINPUT_DECPTS_INPUTMODE "Hauptmenue > Daten eingeben > Dezimalstellen > Eingabemodus"
+#define CAT_MAIN_DATAINPUT_DECPTS_INPUTMODE_AMOUNT "Hauptmenue > Daten eingeben > Dezimalstellen > Eingabemodus > Anzahl Datenpaare"
+#define CAT_MAIN_DATAINPUT_DECPTS_INPUTMODE_AMOUNT_INPUT "[...] > Dezimalstellen > Eingabemodus > Anzahl Datenpaare > Eingabe Daten"
+#define CAT_MAIN_DATAINPUT_DECPTS_INPUTMODE_AMOUNT_INPUT_LATEX "[...] > Eingabemodus > Anzahl Datenpaare > Eingabe Daten > LaTeX- Code"
+#define CAT_MAIN_DATAINPUT_DECPTS_INPUTMODE_AMOUNT_INPUT_LATEX_LABELTABULAR "[...] > Anzahl Datenpaare > Eingabe Daten > LaTeX- Code > Tabellenbezeichnung"
+#define CAT_MAIN_DATAINPUT_DECPTS_INPUTMODE_AMOUNT_INPUT_LATEX_LABELTABULAR_LABELCOLOUMN "[...] > LaTeX- Code > Tabellenbezeichnung > Spaltenbezeichnungen"
+
+// Main -> Help -> ...
+#define CAT_MAIN_HELP "Hauptmenue > Hilfe"
+#define CAT_MAIN_HELP_DATAINPUT "Hauptmenue > Hilfe > Daten eingeben"
+#define CAT_MAIN_HELP_DATAOUTPUT "Hauptmenue > Hilfe > Daten ausgeben"
+#define CAT_MAIN_HELP_DATACHANGE "Hauptmenue > Hilfe > Daten veraendern"
+#define CAT_MAIN_HELP_DATAREARRANGE "Hauptmenue > Hilfe > Daten ordnen"
+#define CAT_MAIN_HELP_REBUILD "Hauptmenue > Hilfe > Dateien neu erstellen"
+#define CAT_MAIN_HELP_ABOUT "Hauptmenue > Hilfe > Ueber das Programm"
+#define CAT_MAIN_HELP_SETTINGS "Hauptmenue > Hilfe > Einstellungen"
+
+// Main -> Settings -> ...
+#define CAT_MAIN_SETTINGS "Hauptmenue > Einstellungen"
+#define CAT_MAIN_SETTINGS_DECPOINTS "Hauptmenue > Einstellungen > Dezimalstellen nach dem Komma"
+#define CAT_MAIN_SETTINGS_LABELTABULAR "Hauptmenue > Einstellungen > Bezeichnung der Tabelle"
+#define CAT_MAIN_SETTINGS_LABELCOLOUMN "Hauptmenue > Einstellungen > Spaltenbezeichnungen"
+#define CAT_MAIN_SETTINGS_DISPLAY "Hauptmenue > Einstellungen > Einstellungen anzeigen"
+
+// Main -> Settings -> Help -> ...
+#define CAT_MAIN_SETTINGS_HELP "Hauptmenue > Einstellungen > Hilfe"
+#define CAT_MAIN_SETTINGS_HELP_DECPOINTS "Hauptmenue > Einstellungen > Hilfe > Dezimalstellen nach dem Komma"
+#define CAT_MAIN_SETTINGS_HELP_WHETHER "Hauptmenue > Einstellungen > Hilfe > Ob die Tabelle eine Bezeichnung besitzt"
+#define CAT_MAIN_SETTINGS_HELP_LABELTABULAR "Hauptmenue > Einstellungen > Hilfe > Bezeichnung der Tabelle"
+#define CAT_MAIN_SETTINGS_HELP_LABELCOLOUMN "Hauptmenue > Einstellungen > Hilfe > Spaltenbezeichnungen"
+#define CAT_MAIN_SETTINGS_HELP_DECDISP "Hauptmenue > Einstellungen > Hilfe > Nachkommastellenanzeige"
+#define CAT_MAIN_SETTINGS_HELP_DISPLAY "Hauptmenue > Einstellungen > Hilfe > Einstellungen anzeigen"
+
+// Data load ...
+#define CAT_DATALOAD "Daten laden..."
+#define CAT_DATALOAD_SUCCESS "Daten laden erfolgreich"
+#define CAT_DATALOAD_FAILED "Daten laden fehlgeschlagen"
+
+//--<Header>-------------------------------------------------------------------------------------------------
 #define HEADER disp_header(0);
 #define HEADER_HELP disp_header(1);
 
-#define TITLE_V "VLE - Vereinfachte LaTeX- Tabelleneingabe (v 1.4)"	// Titel mit Versionsnummer
+//--<Titel und Versionsnummer/n>-----------------------------------------------------------------------------
+#define TITLE_V "VLE - Vereinfachte LaTeX- Tabelleneingabe (v 1.5)"	// Titel mit Versionsnummer
 #define TITLE "VLE - Vereinfachte LaTeX- Tabelleneingabe"			// Titel
-#define VERSIONNUM "v 1.4"						// Versionsnummer
+#define VERSIONNUM "v 1.5"											// Versionsnummer
 
 //===[ Enumerationen, Typdefinitionen, etc. ]=========================================================================================
 typedef int bool;			// Anlegen des bool'schen Datentyps
@@ -114,6 +169,7 @@ void setConsoleColor(void);							// Verändert Farbe(n) der Konsole // Hier: Vor
 void disp_header(bool showHelp);					// Gibt den "Header" des Programms aus
 void disp_header_custom(char custom_string[39]);	// Gibt den "Header" des Programms mit dem eingegebenen Parameterstring als Zusatz am Ende der Zeile aus
 
+void disp_cat(char displine[79]);
 
 //--<Eingabefunktionen>--------------------------------------------------------------------------------------
 int menu_safe_input(int lower_boundary, int upper_boundary);	// Sichere Eingabe von Menüpunkten bzw. Nummern von 0-9
@@ -133,8 +189,8 @@ void data_recreate(double measurements[MAX_MEASUREMENTS][2], config user_config,
 int decpts_input(int dec_ima);	// Eingabefunktion für Dezimalstellen nach dem Komma
 
 void label_input(char* label1_buffer, char* label2_buffer, char* label_tabular_buffer);
-void label_input_fract_tabular(char* label_tabular_buffer);
-void label_input_fract_columns(char* label1_buffer, char* label2_buffer);
+void label_input_fract_tabular(char* label_tabular_buffer, int headermode);
+void label_input_fract_columns(char* label1_buffer, char* label2_buffer, int headermode);
 void toggle_decpts(int* decpts_pointer);
 
 //--<Ausgabefunktionen>--------------------------------------------------------------------------------------

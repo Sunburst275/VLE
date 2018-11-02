@@ -219,6 +219,17 @@ void disp_header_custom(char custom_string[39])
 	drawLineCustom(196);
 }
 
+void disp_cat(char displine[79])
+{
+	system("cls");
+
+	// Ausgabe
+	fputs(displine, stdout);
+	printf("\n");
+
+	drawLineCustom(196);
+}
+
 //--<Eingabe-/Ausgabefunktionen>-----------------------------------------------------------------------------
 int menu_safe_input(int lower_boundary, int upper_boundary)
 {
@@ -311,9 +322,8 @@ int menu_main(void)
 {
 	int userInput = -1; // Indiziert, dass noch nichts eingegeben wurde
 
-	system("cls");
-	printf("VLE - Vereinfachte LaTeX- Tabelleneingabe\t\t\t\t"VERSIONNUM"\n");
-	drawLineCustom(196);
+	disp_cat(CAT_MAIN);
+
 	printf("Was m%cchten Sie tun?\n\n", 148);
 	printf("<1>\tDaten eingeben\n");
 	printf("<2>\tDaten ausgeben\n");
@@ -361,13 +371,13 @@ void disp_help(void)
 	do
 	{
 
-		HEADER_HELP
+		disp_cat(CAT_MAIN_HELP);
 
-			printf("Welchen Punkt w%crden Sie gerne erkl%crt haben?\n\n", 129, 132);
+		printf("Welchen Punkt w%crden Sie gerne erkl%crt haben?\n\n", 129, 132);
 
 		printf("<1>\tDaten eingeben\n");
 		printf("<2>\tDaten ausgeben\n");
-		printf("<3>\tDaten %cndern\n", 132);
+		printf("<3>\tDaten ver%cndern\n", 132);
 		printf("<4>\tDaten ordnen\n");
 		printf("<5>\tDateien (neu) erstellen\n");
 		printf("<8>\t%cber das Programm\n", 154);
@@ -382,8 +392,9 @@ void disp_help(void)
 		// HILFE: Daten einlesen
 		if (userInput == 1)
 		{
-			HEADER
-				printf("Daten eingeben:\n\n");
+			disp_cat(CAT_MAIN_HELP_DATAINPUT);
+
+			printf("Daten eingeben:\n\n");
 			printf("Daten k%cnnen direkt eingegeben und eingespeichert werden.\nDabei kann man aus zwei Modi w%chlen:\n\n- Datenwerteingabe direkt folgend auf Datenpunkteingabe\n- Erst alle Datenpunkte eingeben, dann alle entsprechenden Datenwerte\n", 148, 132);
 			STOPP
 		}
@@ -391,8 +402,9 @@ void disp_help(void)
 		// HILFE: Daten ausgeben
 		if (userInput == 2)
 		{
-			HEADER
-				printf("Daten ausgeben:\n\n");
+			disp_cat(CAT_MAIN_HELP_DATAOUTPUT);
+
+			printf("Daten ausgeben:\n\n");
 			printf("Stellt die eingegebenen Datenpunkte/-werte formatiert in der Konsole dar.\nWenn noch keine Werte eingegeben wurden oder keine Datei existiert, wird dies\nangezeigt.\n");
 			STOPP
 		}
@@ -400,8 +412,9 @@ void disp_help(void)
 		// HILFE: Daten ändern
 		if (userInput == 3)
 		{
-			HEADER
-				printf("Daten %cndern:\n\n", 132);
+			disp_cat(CAT_MAIN_HELP_DATACHANGE);
+
+			printf("Daten %cndern:\n\n", 132);
 			printf("Hier kann man die Daten (die man eingegeben\noder aus einer Datei geladen hat) %cndern.\n", 132);
 			STOPP
 		}
@@ -409,8 +422,9 @@ void disp_help(void)
 		// HILFE: Daten ordnen
 		if (userInput == 4)
 		{
-			HEADER
-				printf("Daten ordnen:\n\n");
+			disp_cat(CAT_MAIN_HELP_DATAREARRANGE);
+
+			printf("Daten ordnen:\n\n");
 			printf("Sie k%cnnen Ihre eingegebenen Daten ordnen lassen. Es gibt vier M%cglichkeiten:\n\n", 148, 148);
 			printf("1)\tNach Datenpunkten in aufsteigender Reihenfolge ordnen\n");
 			printf("2)\tNach Datenpunkten in absteigender Reihenfolge ordnen\n");
@@ -423,8 +437,9 @@ void disp_help(void)
 		// HILFE: Dateien (neu) erstellen
 		if (userInput == 5)
 		{
-			HEADER
-				printf("Dateien (neu) erstellen:\n\n");
+			disp_cat(CAT_MAIN_HELP_REBUILD);
+
+			printf("Dateien (neu) erstellen:\n\n");
 			printf("Die Dateien \""FILENAME_FORM_DATA"\" und \""FILENAME_LATEX_CODE"\" k%cnnen hier\nseparat generiert werden. Vor Erstellung wird nocheinmal nachgefragt,\nob die Einstellungen und die eingegebenen Daten stimmen.\n", 148);
 			STOPP
 		}
@@ -432,11 +447,17 @@ void disp_help(void)
 		// HILFE: Über das Programm
 		if (userInput == 8)
 		{
-			HEADER
-				printf("%cber das Programm:\n\n", 154);
+			disp_cat(CAT_MAIN_HELP_ABOUT);
+
+			printf("%cber das Programm:\n\n", 154);
 			//printf("In dieses Programm k%cnnen Sie Ihre Datenwerte eingeben.\nEs wird ein Ordner mit zwei Dateien erstellt:\n- measured_data.txt\n- latex_table_code.txt\n\nIm ersten sind die eingegebenen Dateien formatiert abgespeichert.\n\nIm zweiten finden Sie den entsprechenden LaTeX- Code f%cr eine Tabelle.\n\nDas Programm ist auf Windows- Systeme ausgelegt.\n", 148, 129);
-			printf("In dieses Programm k%cnnen Sie Ihre Daten (z.B. Messdaten) eingeben\num dann daraus eine LaTeX- Tabelle generieren zu lassen.\n\nEs wird ein Ordner mit dem Namen \""FOLDERNAME"\" erstellt.\nEr wird sich in dem Ordner, in dem das Programm (*.exe) ist, befinden.\n\nIn diesem Ordner werden drei Dateien erstellt:\n- "FILENAME_FORM_DATA"\n- "FILENAME_LATEX_CODE"\n- "FILENAME_BIN_DATA"\n\nIn der ersten sind die eingegebenen Daten formatiert abgespeichert.\nIn der zweiten finden Sie den entsprechenden LaTeX- Code f%cr eine Tabelle.\nIn der dritten Datei sind Ihre Daten zum Lesen f%cr das Programm gespeichert.\n", 148, 129, 129);
-			printf("\n\n\t\t\t!!! HINWEISE !!!\n");
+			printf("In dieses Programm k%cnnen Sie Ihre Daten (z.B. Messdaten) eingeben\num dann daraus eine LaTeX- Tabelle generieren zu lassen.\n\nEs wird ein Ordner mit dem Namen \""FOLDERNAME"\" erstellt.\nEr wird sich in dem Ordner, in dem das Programm (*.exe) ist, befinden.\n\nIn diesem Ordner werden vier Dateien erstellt:", 148);
+			printf("\n - "FILENAME_FORM_DATA"\n - "FILENAME_LATEX_CODE"\n - "FILENAME_BIN_DATA"\n - "FILENAME_SET_CONFIG"\n");
+			printf("\nErste\tDatei:\tEingegebene Daten formatiert.");
+			printf("\nZweite\tDatei:\tGenerierter LaTeX- Code f%cr eine Tabelle.", 129);
+			printf("\nDritte\tDatei:\tIhre Daten zum Lesen f%cr das Programm.", 129);
+			printf("\nVierte\tDatei:\tIhre Konfiguration zum Lesen f%cr das Programm.\n", 129);
+			printf("\n\nHINWEISE:\n");
 			printf("- Das Programm ist auf Windows- Systeme ausgelegt.\n- Beenden Sie das Programm immer mit dem \"Programm beenden\"- Befehl im\n  Hauptmen%c, da erst danach die Daten in die \""FILENAME_BIN_DATA"\"- Datei\n  abgespeichert werden.\n", 129);
 			NEWLINE
 
@@ -451,8 +472,9 @@ void disp_help(void)
 		//HILFE: Einstellungen
 		if (userInput == 9)
 		{
-			HEADER
-				printf("9) Einstellungen:\n\n");
+			disp_cat(CAT_MAIN_HELP_SETTINGS);
+
+			printf("9) Einstellungen:\n\n");
 			printf("Hier k%cnnen verschiedene Attribute der Dateien ver%cndert und angepasst werden.\nEin separater Hilfebildschirm f%cr die einzelnen Unterpunkte\nexistiert im Einstellungsmen%c.\n", 148, 132, 129, 129);
 			STOPP
 		}
@@ -468,8 +490,9 @@ void disp_help_settings(void)
 	do
 	{
 
-		HEADER_HELP
-			printf("Welchen Unterpunkt w%crden Sie gerne erkl%crt haben?\n\n", 129, 132);
+		disp_cat(CAT_MAIN_SETTINGS_HELP);
+
+		printf("Welchen Unterpunkt w%crden Sie gerne erkl%crt haben?\n\n", 129, 132);
 		printf("<1>\tDezimalstellen nach dem Komma\n");
 		//printf("<2>\tLaTeX- Code: Anzahl der Spaltenpaare\n");
 		printf("<3>\tLaTeX- Code: Ob die Tabelle eine Bezeichnung besitzt\n");
@@ -492,8 +515,9 @@ void disp_help_settings(void)
 		// HILFE: Dezimalstellen nach dem Komma
 		if (userInput == 1)
 		{
-			HEADER
-				printf("Dezimalstellen nach dem Komma:\n\nHier k%cnnen Sie die Anzahl der Dezimalstellen nach dem Komma einstellen.\nSie wird global angewendet. Eingaben, die %cber die Kommastellenanzahl\nhinausgehen, werden abgekappt. Sie bleiben jedoch bis zum Beenden\ndes Programms im Programmspeicher erhalten.\n", 148, 129);
+			disp_cat(CAT_MAIN_SETTINGS_HELP_DECPOINTS);
+
+			printf("Dezimalstellen nach dem Komma:\n\nHier k%cnnen Sie die Anzahl der Dezimalstellen nach dem Komma einstellen.\nSie wird global angewendet. Eingaben, die %cber die Kommastellenanzahl\nhinausgehen, werden abgekappt. Sie bleiben jedoch bis zum Beenden\ndes Programms im Programmspeicher erhalten.\n", 148, 129);
 			STOPP
 		}
 
@@ -508,40 +532,45 @@ void disp_help_settings(void)
 		// HILFE: LaTeX- Code: Ob die Tabelle eine Bezeichnung besitzt
 		if (userInput == 3)
 		{
-			HEADER
-				printf("LaTeX- Code: Ob die Tabelle eine Bezeichnung besitzt:\n\nIn LaTeX kann die Tabelle in ein Tabellenregister aufgenommen\nund betitelt werden. Wenn Sie das w%cnschen, m%cssen Sie hier \"Ja\" w%chlen.\nAndererseits w%chlen Sie bitte \"Nein\".\nEin Indikator am Ende der Zeile \"(Derzeit: X)\"\nzeigt Ihnen den derzeitigen Status der Variable an.\n", 129, 129, 132, 132);
+			disp_cat(CAT_MAIN_SETTINGS_HELP_WHETHER);
+
+			printf("LaTeX- Code: Ob die Tabelle eine Bezeichnung besitzt:\n\nIn LaTeX kann die Tabelle in ein Tabellenregister aufgenommen\nund betitelt werden. Wenn Sie das w%cnschen, m%cssen Sie hier \"Ja\" w%chlen.\nAndererseits w%chlen Sie bitte \"Nein\".\nEin Indikator am Ende der Zeile \"(Derzeit: X)\"\nzeigt Ihnen den derzeitigen Status der Variable an.\n", 129, 129, 132, 132);
 			STOPP
 		}
 
 		// HILFE: LaTeX- Code: Bezeichnung der Tabelle
 		if (userInput == 4)
 		{
-			HEADER
-				printf("LaTeX- Code: Bezeichnung der Tabelle:\n\nIn LaTeX kann die Tabelle in ein Tabellenregister aufgenommen\nund betitelt werden. Hier k%cnnen Sie den Titel bestimmen.\nDer Titel wird global verwendet.\n", 148);
+			disp_cat(CAT_MAIN_SETTINGS_HELP_LABELTABULAR);
+
+			printf("LaTeX- Code: Bezeichnung der Tabelle:\n\nIn LaTeX kann die Tabelle in ein Tabellenregister aufgenommen\nund betitelt werden. Hier k%cnnen Sie den Titel bestimmen.\nDer Titel wird global verwendet.\n\nHinweis:\tEs k%cnnen auch LaTeX- Befehle bereits mit eingegeben werden\n\t\twie z.B. \"Impedanz [$\\Omega$]\".\n\t\tUmlaute werden jedoch nicht erkannt.\n", 148, 148);
 			STOPP
 		}
 
 		// HILFE: LaTeX- Code: Spaltenbezeichnungen
 		if (userInput == 5)
 		{
-			HEADER
-				printf("LaTeX- Code: Spaltenbezeichnungen:\n\nIn der generierten LaTeX- Tabelle gibt es zwei Spalten.\nHier bestimmen Sie die Bezeichnungen der beiden.\n\nErste Spaltenbezeichnung\t=\tLinke Spalte\nZweite Spaltenbezeichnung\t=\tRechte Spalte\n");
+			disp_cat(CAT_MAIN_SETTINGS_HELP_LABELCOLOUMN);
+
+			printf("LaTeX- Code: Spaltenbezeichnungen:\n\nIn der generierten LaTeX- Tabelle gibt es zwei Spalten.\nHier bestimmen Sie die Bezeichnungen der beiden.\n\nErste Spaltenbezeichnung\t=\tLinke Spalte\nZweite Spaltenbezeichnung\t=\tRechte Spalte\n\nHinweis:\tEs k%cnnen auch LaTeX- Befehle bereits mit eingegeben werden\n\t\twie z.B. \"Impedanz [$\\Omega$]\".\n\t\tUmlaute werden jedoch nicht erkannt.\n", 148);
 			STOPP
 		}
 
 		// HILFE: Nachkommastellenanzeige
 		if (userInput == 6)
 		{
-			HEADER
-				printf("Nachkommastellenanzeige:\n\nHier k%cnnen Sie einstellen, bei welchen Werten die Nachkommastellen angezeigt\nwerden. Der Standard ist, dass bei allen Daten die Nachkommastellen angezeigt\nwerden. Mit dem Ausw%chlen des Men%cpunktes wechseln Sie durch die Optionen.\nDiese Anzeige wird auch auf die Dateien angewendet.\nDie eingegebenen Nachkommastellen bleiben auch nach Beenden\ndes Programmes erhalten\n", 148, 132, 129);
+			disp_cat(CAT_MAIN_SETTINGS_HELP_DECDISP);
+
+			printf("Nachkommastellenanzeige:\n\nHier k%cnnen Sie einstellen, bei welchen Werten die Nachkommastellen angezeigt\nwerden. Der Standard ist, dass bei allen Daten die Nachkommastellen angezeigt\nwerden. Mit dem Ausw%chlen des Men%cpunktes wechseln Sie durch die Optionen.\nDiese Anzeige wird auch auf die Dateien angewendet.\nDie eingegebenen Nachkommastellen bleiben auch nach Beenden\ndes Programmes erhalten\n", 148, 132, 129);
 			STOPP
 		}
 
 		// HILFE: Einstellungen anzeigen
 		if (userInput == 9)
 		{
-			HEADER
-				printf("Einstellungen anzeigen:\n\nHier werden alle Einstellungen und Titel einmal aufgelistet.\n");
+			disp_cat(CAT_MAIN_SETTINGS_HELP_DISPLAY);
+
+			printf("Einstellungen anzeigen:\n\nHier werden alle Einstellungen und Titel einmal aufgelistet.\n");
 			STOPP
 		}
 
@@ -552,10 +581,10 @@ void disp_help_settings(void)
 
 void disp_settings_main(config user_config)
 {
-	HEADER
+	disp_cat(CAT_MAIN_SETTINGS_DISPLAY);
 
-		// Dezimalstellen nach dem Komma
-		printf("Dezimalstellen nach dem Komma:\t\t%i\n", user_config.decpts_nb);
+	// Dezimalstellen nach dem Komma
+	printf("Dezimalstellen nach dem Komma:\t\t%i\n", user_config.decpts_nb);
 
 	// Dezimalstellenanzeige
 	printf("Dezimalstellen werden angezeigt bei:\t");
@@ -654,6 +683,8 @@ void disp_settings_funct(config user_config)
 
 void data_input_prime(double measurements[MAX_MEASUREMENTS][2], char* currDir, config* user_config_pt)
 {
+	// HIER NOCH PROBLEME IM HEADER (MENÜFÜHRUNG) UND DIE ENTSPRECHENDEN SCHRITTE WERDEN NICHT ANGEZEIGT -->>> FIXXXXEN!!!
+
 	int userInput = -1;					// Abspeicherung der Eingabe des Nutzers; "-1" zur Signalisierung, dass kein Wert eingegeben wurde
 	// decpts							// Dezimalstellen die genutzt werden
 	bool functionState = true;			// Für Aufrechterhaltung der Funktionsschleife
@@ -670,9 +701,9 @@ void data_input_prime(double measurements[MAX_MEASUREMENTS][2], char* currDir, c
 
 	do
 	{
-		HEADER
+		disp_cat(CAT_MAIN_DATAINPUT);
 
-			printf("Es wird eine neue Datei angelegt und m%cglicherweise\nvorhandene Daten %cberschrieben.\nTrotzdem fortfahren?\n\n<1>\tJa\n<0>\tNein\n\nIhre Eingabe:\t", 148, 129);
+		printf("Es wird eine neue Datei angelegt und m%cglicherweise\nvorhandene Daten %cberschrieben.\nTrotzdem fortfahren?\n\n<1>\tJa\n<0>\tNein\n\nIhre Eingabe:\t", 148, 129);
 		//scanf("%i", &userAgree);
 		userAgree = menu_safe_input(0, 1);
 
@@ -683,16 +714,15 @@ void data_input_prime(double measurements[MAX_MEASUREMENTS][2], char* currDir, c
 
 		else
 		{
-			HEADER
+			disp_cat(CAT_MAIN_DATAINPUT_DECPTS);
 
-				//printf("Auf wieviele Kommastellen genau m%cchten Sie die Daten eingeben?\n(min. 0 | max. 9 | Standard: 3)\n\nIhre Eingabe:\t", 148);
-				printf("Auf wieviele Kommastellen genau m%cchten Sie die Daten eingeben?\n(min. 0 %c max. 9 %c Standard: 3 %c Jetzt: %i)\n\nIhre Eingabe:\t", 148, 179, 179, 179, user_config_pt->decpts_nb);
+			//printf("Auf wieviele Kommastellen genau m%cchten Sie die Daten eingeben?\n(min. 0 | max. 9 | Standard: 3)\n\nIhre Eingabe:\t", 148);
+			printf("Auf wieviele Kommastellen genau m%cchten Sie die Daten eingeben?\n(min. 0 %c max. 9 %c Standard: 3 %c Jetzt: %i)\n\nIhre Eingabe:\t", 148, 179, 179, 179, user_config_pt->decpts_nb);
 			user_config_pt->decpts_nb = menu_safe_input(0, 9);
 
-
-			HEADER
-
-				userInput = menu_input();
+			// Eingabemodus wählen
+			disp_cat(CAT_MAIN_DATAINPUT_DECPTS_INPUTMODE);
+			userInput = menu_input();
 
 			if (userInput != 0)
 			{
@@ -705,18 +735,18 @@ void data_input_prime(double measurements[MAX_MEASUREMENTS][2], char* currDir, c
 				}
 
 
-				HEADER
+				disp_cat(CAT_MAIN_DATAINPUT_DECPTS_INPUTMODE_AMOUNT);
 
-					// Der Benutzer will beides jeweils entsprechend eingeben
-					if (userInput == 1)
+				// Der Benutzer will beides jeweils entsprechend eingeben
+				if (userInput == 1)
+				{
+					userInputState = data_input_mode1(measurements, &(user_config_pt->data_nb));
+					if (!userInputState)
 					{
-						userInputState = data_input_mode1(measurements, &(user_config_pt->data_nb));
-						if (!userInputState)
-						{
-							return;
-						}
-						functionState = false;
+						return;
 					}
+					functionState = false;
+				}
 
 				// Der Benutzer will erst die Datenpunkte (x- Achse), und dann die zugehörenden Werte (y- Achse) eingeben
 				if (userInput == 2)
@@ -730,53 +760,55 @@ void data_input_prime(double measurements[MAX_MEASUREMENTS][2], char* currDir, c
 				}
 
 				data_save_formatted(measurements, currDir, user_config_pt->decpts_nb, user_config_pt->decpts_status, &(user_config_pt->data_nb));
-				drawLineCustom(196);
+				
+				disp_cat(CAT_MAIN_DATAINPUT_DECPTS_INPUTMODE_AMOUNT_INPUT);
+
 				printf("Ihre eingegebenen Datenwerte:\n\n");
 				data_output_funct(measurements, user_config_pt->decpts_nb, user_config_pt->decpts_status, &(user_config_pt->data_nb));
 
 				STOPP
 
 					// Abfrage, ob der Code jetzt eingegeben werden soll
-					HEADER
+					disp_cat(CAT_MAIN_DATAINPUT_DECPTS_INPUTMODE_AMOUNT_INPUT_LATEX);
 
-					printf("M%cchten Sie jetzt Ihren LaTeX- Code erstellen lassen?\n\n<1>\tJa\n<0>\tNein\n\nIhre Eingabe:\t", 148);
+				printf("M%cchten Sie jetzt Ihren LaTeX- Code erstellen lassen?\n\n<1>\tJa\n<0>\tNein\n\nIhre Eingabe:\t", 148);
 				//scanf("%i", &latex_create_now);
 				latex_create_now = menu_safe_input(0, 1);
 
 				// LaTeX- Code erstellen
 				if (latex_create_now)
 				{
-					HEADER
+					disp_cat(CAT_MAIN_DATAINPUT_DECPTS_INPUTMODE_AMOUNT_INPUT_LATEX);
 
-						printf("Soll Ihre Tabelle eine Bezeichnung haben und im Verzeichnis aufgenommen werden?\n\n<1>\tJa\n<0>\tNein\n\nIhre Eingabe:\t");
+					printf("Soll Ihre Tabelle eine Bezeichnung haben und im Verzeichnis aufgenommen werden?\n\n<1>\tJa\n<0>\tNein\n\nIhre Eingabe:\t");
 					user_config_pt->has_label = menu_safe_input(0, 1);
 
-					HEADER
+					disp_cat(CAT_MAIN_DATAINPUT_DECPTS_INPUTMODE_AMOUNT_INPUT_LATEX);
 
-						printf("Wollen Sie die Spalten- und Tabellenbezeichnungen jetzt eingeben/ver%cndern?\n\n<1>\tJa\n<0>\tNein\n\nIhre Eingabe:\t", 132);
+					printf("Wollen Sie die Spalten- und Tabellenbezeichnungen jetzt eingeben/ver%cndern?\n\n<1>\tJa\n<0>\tNein\n\nIhre Eingabe:\t", 132);
 					latex_name_now = menu_safe_input(0, 1);
 
+
+					// HIER NOCH PROBLEME IM HEADER (MENÜFÜHRUNG)
 					if (latex_name_now)
 					{
 						if (user_config_pt->has_label)
 						{
-							label_input_fract_tabular(user_config_pt->label_tabular);
+							label_input_fract_tabular(user_config_pt->label_tabular, 1);
 						}
-						label_input_fract_columns(user_config_pt->label1, user_config_pt->label2);
+						label_input_fract_columns(user_config_pt->label1, user_config_pt->label2, 1);
 					}
 
 					// LaTeX- Code erstellen
 					NEWLINE
+
 						data_save_latex(measurements, currDir, *user_config_pt);
 					drawLineCustom(196);
 					printf("LaTeX- Code erfolgreich erstellt.\n");
 
-					STOPP
 				}
-				else
-				{
-					STOPP
-				}
+
+				STOPP
 
 			}
 		}
@@ -802,7 +834,9 @@ int data_input_mode1(double measurements_inFunc[MAX_MEASUREMENTS][2], int* data_
 		return 0;
 	}
 
-	drawLineCustom(196);
+	disp_cat(CAT_MAIN_DATAINPUT_DECPTS_INPUTMODE_AMOUNT_INPUT);
+
+	printf("Geben Sie nun bitte Ihre Daten ein:\n\n");
 
 	for (int i = 0; i < measureCount; i++)
 	{
@@ -839,7 +873,9 @@ int data_input_mode2(double measurements_inFunc[MAX_MEASUREMENTS][2], int* data_
 		return 0;
 	}
 
-	drawLineCustom(196);
+	disp_cat(CAT_MAIN_DATAINPUT_DECPTS_INPUTMODE_AMOUNT_INPUT);
+
+	printf("Geben Sie nun bitte Ihre Daten ein:\n\n");
 
 	// Datenpunkteingabe (Punkte auf der x- Achse)
 	for (int i = 0; i < measureCount; i++)
@@ -868,56 +904,56 @@ void data_output_main(double measurements[MAX_MEASUREMENTS][2], int decimalpts, 
 	// Länge des
 	measureCount = *data_nb;
 
-	HEADER
+	disp_cat(CAT_MAIN_DATAOUTPUT);
 
-		// Keine Daten gefunden
-		if (measureCount == 0)
-		{
-			printf("Keine Daten gefunden.\n");
-		}
+	// Keine Daten gefunden
+	if (measureCount == 0)
+	{
+		printf("Keine Daten gefunden.\n");
+	}
 
 	// Eingegebene Daten ausgeben
-		else
+	else
+	{
+		printf("Ihre Daten:\n\n");
+		printf("###\tDatenpunkt\t\tDatenwert\n");
+
+		if (decpts_status == decpts_both)
 		{
-			printf("Ihre Daten:\n\n");
-			printf("###\tDatenpunkt\t\tDatenwert\n");
-
-			if (decpts_status == decpts_both)
+			for (int i = 0; i < measureCount; i++)
 			{
-				for (int i = 0; i < measureCount; i++)
-				{
-					printf("%03i\t%6.*lf\t\t\t%6.*lf\n", i + 1, decimalpts, measurements[i][0], decimalpts, measurements[i][1]);
-				}
+				printf("%03i\t%6.*lf\t\t\t%6.*lf\n", i + 1, decimalpts, measurements[i][0], decimalpts, measurements[i][1]);
 			}
-			else if (decpts_status == decpts_dataval_only)
-			{
-				for (int i = 0; i < measureCount; i++)
-				{
-					printf("%03i\t%6.*lf\t\t\t%6.*lf\n", i + 1, 0, measurements[i][0], decimalpts, measurements[i][1]);
-				}
-			}
-			else if (decpts_status == decpts_datapts_only)
-			{
-				for (int i = 0; i < measureCount; i++)
-				{
-					printf("%03i\t%6.*lf\t\t\t%6.*lf\n", i + 1, decimalpts, measurements[i][0], 0, measurements[i][1]);
-				}
-			}
-			else if (decpts_status == decpts_none)
-			{
-				for (int i = 0; i < measureCount; i++)
-				{
-					printf("%03i\t%6.*lf\t\t\t%6.*lf\n", i + 1, 0, measurements[i][0], 0, measurements[i][1]);
-				}
-			}
-
-			//// HAUPTDURCHFÜHRUNG DER FUNKTION ALS BACKUP
-			//for (int i = 0; i < measureCount; i++)
-			//{
-			//	printf("%03i\t%6.*lf\t\t\t%6.*lf\n", i + 1, decimalpts, measurements[i][0], decimalpts, measurements[i][1]);
-			//}
-
 		}
+		else if (decpts_status == decpts_dataval_only)
+		{
+			for (int i = 0; i < measureCount; i++)
+			{
+				printf("%03i\t%6.*lf\t\t\t%6.*lf\n", i + 1, 0, measurements[i][0], decimalpts, measurements[i][1]);
+			}
+		}
+		else if (decpts_status == decpts_datapts_only)
+		{
+			for (int i = 0; i < measureCount; i++)
+			{
+				printf("%03i\t%6.*lf\t\t\t%6.*lf\n", i + 1, decimalpts, measurements[i][0], 0, measurements[i][1]);
+			}
+		}
+		else if (decpts_status == decpts_none)
+		{
+			for (int i = 0; i < measureCount; i++)
+			{
+				printf("%03i\t%6.*lf\t\t\t%6.*lf\n", i + 1, 0, measurements[i][0], 0, measurements[i][1]);
+			}
+		}
+
+		//// HAUPTDURCHFÜHRUNG DER FUNKTION ALS BACKUP
+		//for (int i = 0; i < measureCount; i++)
+		//{
+		//	printf("%03i\t%6.*lf\t\t\t%6.*lf\n", i + 1, decimalpts, measurements[i][0], decimalpts, measurements[i][1]);
+		//}
+
+	}
 
 	// Stoppen damit der Benutzer sich die Daten anschauen kann
 	stopp();
@@ -974,84 +1010,84 @@ bool data_change(double measurements[MAX_MEASUREMENTS][2], int decpts, int decpt
 
 	measurementCount = *data_nb;
 
-	HEADER
+	disp_cat(CAT_MAIN_DATACHANGE);
 
-		// Keine Daten gefunden
-		if (measurementCount == 0)
-		{
-			printf("Keine Daten gefunden.\n");
-			STOPP
-				return 0;
-		}
+	// Keine Daten gefunden
+	if (measurementCount == 0)
+	{
+		printf("Keine Daten gefunden.\n");
+		STOPP
+			return 0;
+	}
 
 	// Eingegebene Daten ausgeben
-		else
+	else
+	{
+		do
 		{
-			do
+			if (input_already)
 			{
-				if (input_already)
+				disp_cat(CAT_MAIN_DATACHANGE);
+			}
+
+			printf("Ihre Daten:\n\n");
+			data_output_funct(measurements, decpts, decpts_status, data_nb);
+			NEWLINE
+
+				drawLineCustom(196);
+
+			if (userInput_Nb > measurementCount && input_already)
+			{
+				printf("Der Datenwert %i existiert nicht.\nBitte geben Sie einen existierenden Datenwert ein.\n\n", userInput_Nb);
+				drawLineCustom(196);
+			}
+			printf("Welchen Datenwert m%cchten Sie ver%cndern?\nBitte geben Sie die Nummer an. (0 %c Abbruch)\nIhre Eingabe:\t", 148, 132, 26);
+			userInput_Nb = (int)safe_input_double();
+			input_already = true;
+
+			NEWLINE
+
+				if (userInput_Nb == 0)
 				{
-					HEADER
+					return false;
 				}
+			if (!(userInput_Nb > measurementCount))
+			{
+				disp_cat(CAT_MAIN_DATACHANGE);
 
 				printf("Ihre Daten:\n\n");
 				data_output_funct(measurements, decpts, decpts_status, data_nb);
 				NEWLINE
-
 					drawLineCustom(196);
 
-				if (userInput_Nb > measurementCount && input_already)
+				printf("Welchen Wert m%cchten Sie ver%cndern?\n\n<1>\tDatenpunkt\n<2>\tDatenwert\n\nIhre Eingabe:\t", 148, 132);
+				userInput_Choice = menu_safe_input(1, 2);
+				NEWLINE
+					drawLineCustom(196);
+				if (userInput_Choice == 1)
 				{
-					printf("Der Datenwert %i existiert nicht.\nBitte geben Sie einen existierenden Datenwert ein.\n\n", userInput_Nb);
-					drawLineCustom(196);
+					printf("Geben Sie den neuen Datenpunkt ein:\t");
+					userInput_value = safe_input_double();
+					measurements[userInput_Nb - 1][0] = userInput_value;
 				}
-				printf("Welchen Datenwert m%cchten Sie ver%cndern?\nBitte geben Sie die Nummer an. (0 %c Abbruch)\nIhre Eingabe:\t", 148, 132, 26);
-				userInput_Nb = (int)safe_input_double();
-				input_already = true;
-
+				if (userInput_Choice == 2)
+				{
+					printf("Geben Sie den neuen Datenwert ein:\t");
+					userInput_value = safe_input_double();
+					measurements[userInput_Nb - 1][1] = userInput_value;
+				}
 				NEWLINE
 
-					if (userInput_Nb == 0)
-					{
-						return false;
-					}
-				if (!(userInput_Nb > measurementCount))
-				{
-					HEADER
+					disp_cat(CAT_MAIN_DATACHANGE);
 
-						printf("Ihre Daten:\n\n");
-					data_output_funct(measurements, decpts, decpts_status, data_nb);
-					NEWLINE
-						drawLineCustom(196);
-
-					printf("Welchen Wert m%cchten Sie ver%cndern?\n\n<1>\tDatenpunkt\n<2>\tDatenwert\n\nIhre Eingabe:\t", 148, 132);
-					userInput_Choice = menu_safe_input(1, 2);
-					NEWLINE
-						drawLineCustom(196);
-					if (userInput_Choice == 1)
-					{
-						printf("Geben Sie den neuen Datenpunkt ein:\t");
-						userInput_value = safe_input_double();
-						measurements[userInput_Nb - 1][0] = userInput_value;
-					}
-					if (userInput_Choice == 2)
-					{
-						printf("Geben Sie den neuen Datenwert ein:\t");
-						userInput_value = safe_input_double();
-						measurements[userInput_Nb - 1][1] = userInput_value;
-					}
-					NEWLINE
-
-						HEADER
-
-						printf("Ihre neuen Daten:\n\n");
-					data_output_funct(measurements, decpts, decpts_status, data_nb);
-					change_done = true;
-				}
+				printf("Ihre neuen Daten:\n\n");
+				data_output_funct(measurements, decpts, decpts_status, data_nb);
+				change_done = true;
+			}
 
 
-			} while (!change_done);
-		}
+		} while (!change_done);
+	}
 
 	STOPP
 
@@ -1076,8 +1112,9 @@ void data_rearrange(double measurements[MAX_MEASUREMENTS][2], int decpts, int de
 	// Keine Daten gefunden
 	if (measureCount <= 0)
 	{
-		HEADER
-			printf("Keine Daten gefunden.\n");
+		disp_cat(CAT_MAIN_DATAREARRANGE);
+
+		printf("Keine Daten gefunden.\n");
 		STOPP
 			return;
 	}
@@ -1089,8 +1126,9 @@ void data_rearrange(double measurements[MAX_MEASUREMENTS][2], int decpts, int de
 		pairsOfData[i].data_value = measurements[i][1];
 	}
 
-	HEADER
-		printf("Wonach m%cchten Sie Ihre Daten ordnen?\n\n", 148);
+	disp_cat(CAT_MAIN_DATAREARRANGE);
+
+	printf("Wonach m%cchten Sie Ihre Daten ordnen?\n\n", 148);
 	printf("<1>\tDatenpunkte aufsteigend\n");
 	printf("<2>\tDatenpunkte absteigend\n");
 	printf("<3>\tDatenwerte aufsteigend\n");
@@ -1108,9 +1146,9 @@ void data_rearrange(double measurements[MAX_MEASUREMENTS][2], int decpts, int de
 	}
 	else
 	{
-		HEADER
+		disp_cat(CAT_MAIN_DATAREARRANGE);
 
-			printf("Ihre Daten vor dem Sortieren:\n\n");
+		printf("Ihre Daten vor dem Sortieren:\n\n");
 		data_output_funct(measurements, decpts, decpts_status, data_nb);
 		drawLineCustom(196);
 
@@ -1255,9 +1293,9 @@ int decpts_input(int dec_ima)
 {
 	int dec_inp = 0;
 
-	HEADER
+	disp_cat(CAT_MAIN_SETTINGS_DECPOINTS);
 
-		printf("Auf wieviele Kommastellen genau m%cchten Sie die Daten eingeben?\n(min. 0 %c max. 9 %c Standard: 3 %c Jetzt: %i)\n\nIhre Eingabe:\t", 148, 179, 179, 179, dec_ima);
+	printf("Auf wieviele Kommastellen genau m%cchten Sie die Daten eingeben?\n(min. 0 %c max. 9 %c Standard: 3 %c Jetzt: %i)\n\nIhre Eingabe:\t", 148, 179, 179, 179, dec_ima);
 	dec_inp = menu_safe_input(0, 9);
 
 	return dec_inp;
@@ -1299,16 +1337,16 @@ void label_input(char* label1_buffer, char* label2_buffer, char* label_tabular_b
 	processBar_4[1] = 219;
 	processBar_4[2] = 219;
 	processBar_4[3] = 219;
-	
+
 	// Prozessstreifen:
-	
+
 	do
 	{
 
 		disp_header_custom(processBar_1);
 
-			// Labels abfragen
-			printf("Wie ist die Bezeichnung der ersten Spalte?\nIhre Eingabe:\t");
+		// Labels abfragen
+		printf("Wie ist die Bezeichnung der ersten Spalte?\nIhre Eingabe:\t");
 		fgets(label1_buffer, 49, stdin);
 
 		disp_header_custom(processBar_2);
@@ -1345,7 +1383,7 @@ void label_input(char* label1_buffer, char* label2_buffer, char* label_tabular_b
 	return;
 }
 
-void label_input_fract_tabular(char* label_tabular_buffer)
+void label_input_fract_tabular(char* label_tabular_buffer, int headermode)
 {
 	bool userAgree = false;
 
@@ -1353,10 +1391,18 @@ void label_input_fract_tabular(char* label_tabular_buffer)
 	{
 
 		// Header
-		HEADER
+		if (headermode)
+		{
+			disp_cat(CAT_MAIN_DATAINPUT_DECPTS_INPUTMODE_AMOUNT_INPUT_LATEX_LABELTABULAR);
+		}
+		else
+		{
+			disp_cat(CAT_MAIN_SETTINGS_LABELTABULAR);
+		}
+		
 
-			// Label abfragen
-			printf("Wie ist die Bezeichnung der Tabelle? (0 %c Keine Bezeichnung)\nIhre Eingabe:\t", 26);
+		// Label abfragen
+		printf("Wie ist die Bezeichnung der Tabelle? (0 %c Keine Bezeichnung)\nIhre Eingabe:\t", 26);
 		fgets(label_tabular_buffer, 49, stdin);
 
 		drawLineCustom(196);
@@ -1371,7 +1417,7 @@ void label_input_fract_tabular(char* label_tabular_buffer)
 	return;
 }
 
-void label_input_fract_columns(char* label1_buffer, char* label2_buffer)
+void label_input_fract_columns(char* label1_buffer, char* label2_buffer, int headermode)
 {
 	bool userAgree = false;
 
@@ -1379,10 +1425,17 @@ void label_input_fract_columns(char* label1_buffer, char* label2_buffer)
 	{
 
 		// Header
-		HEADER
+		if (headermode)
+		{
+			disp_cat(CAT_MAIN_DATAINPUT_DECPTS_INPUTMODE_AMOUNT_INPUT_LATEX_LABELTABULAR_LABELCOLOUMN);
+		}
+		else
+		{
+			disp_cat(CAT_MAIN_SETTINGS_LABELTABULAR);
+		}
 
-			// Labels abfragen
-			printf("Wie ist die Bezeichnung der ersten Spalte? (0 %c Keine Bezeichnung)\nIhre Eingabe:\t", 26);
+		// Labels abfragen
+		printf("Wie ist die Bezeichnung der ersten Spalte? (0 %c Keine Bezeichnung)\nIhre Eingabe:\t", 26);
 		fgets(label1_buffer, 49, stdin);
 
 		drawLineCustom(196);
@@ -1796,10 +1849,11 @@ config data_load(double dat_array[MAX_MEASUREMENTS][2], char* currDir, config co
 
 	// Durchführung
 
-	// Hier wird der HEADER mit Versionsnummer angezeigt, da der Bildschirm sich noch vor dem Hauptmenü befindet. Konsistenz ist wichtig. -> Andererseits: Normal "HEADER".
+	//Obsolet:		 // Hier wird der HEADER mit Versionsnummer angezeigt, da der Bildschirm sich noch vor dem Hauptmenü befindet. Konsistenz ist wichtig. -> Andererseits: Normal "HEADER".
 	system("cls");
-	printf("VLE - Vereinfachte LaTeX- Tabelleneingabe\t\t\t\t"VERSIONNUM"\n");
-	drawLineCustom(196);
+	//printf("VLE - Vereinfachte LaTeX- Tabelleneingabe\t\t\t\t"VERSIONNUM"\n");
+	//drawLineCustom(196);
+	disp_cat(CAT_DATALOAD);
 
 	// Anzeige der gefundenen Dateien
 	if (filept_format || filept_latex || filept_bin)
@@ -1897,7 +1951,7 @@ config data_load(double dat_array[MAX_MEASUREMENTS][2], char* currDir, config co
 		printf("Ladevorgang Datens%ctze:\n", 132);
 		printf("- Leseversuche Insgesamt:\t%i\n", tryCount);
 		printf("- Leseversuche Erfolgreich:\t%i\n", loadCount);
-		
+
 		printf("\n");
 		printf("Ladevorgang Einstellungen:\n");
 		if (config_success == 0)
@@ -1914,8 +1968,9 @@ config data_load(double dat_array[MAX_MEASUREMENTS][2], char* currDir, config co
 
 	else
 	{
-		HEADER
-			printf("Es werden neue Dateien angelegt.\n");
+		disp_cat(CAT_DATALOAD);
+
+		printf("Es werden neue Dateien angelegt.\n");
 	}
 
 	STOPP
@@ -1933,32 +1988,33 @@ void data_recreate(double measurements[MAX_MEASUREMENTS][2], config user_config,
 	// Abfrage, ob Daten vorhanden sind
 	measureCount = user_config.data_nb;
 
-	HEADER
-		// Wenn Daten vorhanden sind
-		if (measureCount == 0)
-		{
-			printf("Keine Daten gefunden. Erstellung der Dateien nicht m%cglich.\n", 148);
-			STOPP
-				return;
-		}
-		else
-		{
-			printf("Es werden die Dateien (LaTeX- Code & formatierte Daten)\nmit folgenden Einstellungen generiert:\n\n");
+	disp_cat(CAT_MAIN_REBUILD);
 
-			disp_settings_funct(user_config);
-			NEWLINE
-				drawLineCustom(196);
+	// Wenn Daten vorhanden sind
+	if (measureCount == 0)
+	{
+		printf("Keine Daten gefunden. Erstellung der Dateien nicht m%cglich.\n", 148);
+		STOPP
+			return;
+	}
+	else
+	{
+		printf("Es werden die Dateien (LaTeX- Code & formatierte Daten)\nmit folgenden Einstellungen generiert:\n\n");
 
-			printf("Sind die Einstellungen so O.K.?\n\n<1>\tJa\n<0>\tAbbrechen\n\nIhre Eingabe:\t");
-			userAgree_1 = menu_safe_input(0, 1);
-		}
+		disp_settings_funct(user_config);
+		NEWLINE
+			drawLineCustom(196);
+
+		printf("Sind die Einstellungen so O.K.?\n\n<1>\tJa\n<0>\tAbbrechen\n\nIhre Eingabe:\t");
+		userAgree_1 = menu_safe_input(0, 1);
+	}
 
 	// Fragen, ob die Daten, die eingegeben wurden, ok sind.
 	if (userAgree_1)
 	{
-		HEADER
+		disp_cat(CAT_MAIN_REBUILD);
 
-			printf("Dies sind Ihre eingegebenen Datenwerte:\n\n");
+		printf("Dies sind Ihre eingegebenen Datenwerte:\n\n");
 
 		data_output_funct(measurements, user_config.decpts_nb, user_config.decpts_status, &(user_config.data_nb));
 		NEWLINE
@@ -1982,8 +2038,9 @@ void data_recreate(double measurements[MAX_MEASUREMENTS][2], config user_config,
 		data_save_formatted(measurements, currDir, user_config.decpts_nb, user_config.decpts_status, &(user_config.data_nb));
 		data_save_latex(measurements, currDir, user_config);
 		*data_changed_pt = 0;
-		HEADER
-			printf("Dateien erfolgreich erstellt\n");
+		disp_cat(CAT_MAIN_REBUILD);
+
+		printf("Dateien erfolgreich erstellt\n");
 		STOPP
 	}
 	else

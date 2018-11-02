@@ -81,17 +81,29 @@ n.A.
 // + Nummer an Datensätzen nun ins Einstellungs- Struct speichern
 // + Alle enstprechenden Funktionen an obiges Anpassen
 // + Dateiendungen an "*.vledat" und "*.vleset" anpassen
-// - Im Einstellungs- Menü oben rechts "Einstellungen" (wie im Hilfemenü) anzeigen lassen
-// - Versionsnummer im Header entsprechend wie "Hilfe" und "Einstellungen" oben rechts anzeigen lassen
+// x Im Einstellungs- Menü oben rechts "Einstellungen" (wie im Hilfemenü) anzeigen lassen
+// x Versionsnummer im Header entsprechend wie "Hilfe" und "Einstellungen" oben rechts anzeigen lassen
 // + PROBLEM: Sofort nach dem Starten gibt es Probleme beim Abspeichern wenn man direkt beendet (Config wird nicht richtig geladen?)
 // + Change- Function krüppelt
 // ? Change -> Löschen- Funktion einbauen
 // + Datensätze werden corrupted (beim speichern in *.bin?) (Problem hat sich magisch aufgelöst (keine Ahnung warum))
 // + LaTeX- Code wird nicht ordentlich erstellt (Anmerkung: LaTeX- Kommandos können eingefügt werden (in den Text) wie z.B.: Erste Zeile: "Impedanz [$\Omega$]" <- Sehr praktisch!!!) Problemlösung: coloumn_nb war auf 0, muss aber für die einwandfreie Funktion der LaTeX- Code- Erstellung auf 1 sein
-// - LaTeX- Code- Erstellung mit Umlauterkennung erstellen
+// x LaTeX- Code- Erstellung mit Umlauterkennung erstellen
 // ? LaTeX - Einstellung: 1, 2 oder 3 Spaltenpaare-> Togglen (und vllt.Bsp.- Anzeige, Endreihe eingeben lassen)
-// - Icons (Alle Größen) bearbeiten
+// x Icons (Alle Größen) bearbeiten
 // + Lade-/Speicherfunktionen mit adäquaten Ausgabemeldungen versehen
+// + In der Einstellungshilfe für Spalten- und Tabellenbezeichnungen Hinweis eingefügt: "Hinweis: Es können auch LaTeX- Befehle bereits mit eingegeben werden wie z.B. "Impedanz [$\Omega$]". Umlaute werden jedoch nicht erkannt."
+
+// TODO (v1.5)
+// - LaTeX- Code- Erstellung mit Umlauterkennung erstellen
+// + Menüführung verbessern
+// + Kleine Bugs ausbessern
+// + (Recht)Schreibfehler ausmerzen
+// - Icons (Alle Größen) bearbeiten
+// ? Change -> Löschen- Funktion einbauen
+// ? LaTeX - Einstellung: 1, 2 oder 3 Spaltenpaare-> Togglen (und vllt.Bsp.- Anzeige, Endreihe eingeben lassen)
+// - ...
+
 
 //===[ Einzubindende Bibliotheken ]====================================================================================================
 #include "latex_eingabe_header.h"
@@ -182,10 +194,10 @@ int main(int argc, char* argv[])
 				do
 				{
 					// Header
-					HEADER
+					disp_cat(CAT_MAIN_SETTINGS);
 
-						// Optionen darlegen
-						printf("Was m%cchten Sie einstellen?\n\n", 148);
+					// Optionen darlegen
+					printf("Was m%cchten Sie einstellen?\n\n", 148);
 					printf("<1>\tDezimalstellen nach dem Komma\n");
 					//printf("<2>\tLaTeX- Code: Anzahl der Spaltenpaare\n");
 					printf("<3>\tLaTeX- Code: Ob die Tabelle eine Bezeichnung besitzt (Derzeit: ");
@@ -231,8 +243,8 @@ int main(int argc, char* argv[])
 					case 1:	user_config.decpts_nb = decpts_input(*decpts_nb_pt);										break;	// Dezimalstellen nach dem Komma
 					case 2:	/*LaTeX - Code : Anzahl der Spaltenpaare*/													break;	// LaTeX - Code : Anzahl der Spaltenpaare
 					case 3: user_config.has_label = !user_config.has_label;												break;	// LaTeX- Code: Ob die Tabelle eine Bezeichnung besitzt
-					case 4:	label_input_fract_tabular(user_config.label_tabular);										break;	// LaTeX - Code: Bezeichnung der Tabelle
-					case 5:	label_input_fract_columns(user_config.label1, user_config.label2);							break;	// LaTeX - Code : Spaltenbezeichnungen
+					case 4:	label_input_fract_tabular(user_config.label_tabular, 0);									break;	// LaTeX - Code: Bezeichnung der Tabelle
+					case 5:	label_input_fract_columns(user_config.label1, user_config.label2, 0);						break;	// LaTeX - Code : Spaltenbezeichnungen
 					case 6: toggle_decpts(decpts_status_pt);															break;	// In welcher Spalte Dezimalstellen angezeigt werden
 					case 8: disp_help_settings();																		break;	// Hilfe
 					case 9: disp_settings_main(user_config);															break;	// Einstellungen anzeigen
@@ -249,8 +261,9 @@ int main(int argc, char* argv[])
 		//--< Ende des Programms >-------------------------------------------------------------------------------------------------------->>>>
 		if (data_changed)
 		{
-			HEADER
-				printf("ACHTUNG!\n\nSie haben Ihre Daten ver%cndert, jedoch nicht abgespeichert.\nWollen Sie die Dateien jetzt neu erstellen lassen?\n\nEs werden die Dateien \""FILENAME_FORM_DATA"\" und \""FILENAME_LATEX_CODE"\" erstellt.\nDie jetzigen Einstellungen werden genutzt.\n\n<1>\tNeu erstellen\n<2>\tAbbruch\n<0>\tBeenden\n\nIhre Eingabe:\t", 132);
+			disp_cat("WARNUNG!");
+
+			printf("Sie haben Ihre Daten ver%cndert, jedoch nicht abgespeichert.\nWollen Sie die Dateien jetzt neu erstellen lassen?\n\nEs werden die Dateien \""FILENAME_FORM_DATA"\" und \""FILENAME_LATEX_CODE"\" erstellt.\nDie jetzigen Einstellungen werden genutzt.\n\n<1>\tNeu erstellen\n<2>\tAbbruch\n<0>\tBeenden\n\nIhre Eingabe:\t", 132);
 			userInput_end = menu_safe_input(0, 2);
 
 			if (userInput_end == 1)

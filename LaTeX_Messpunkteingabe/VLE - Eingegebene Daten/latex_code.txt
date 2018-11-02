@@ -1,14 +1,9 @@
 \begin{table}[H]
 	\begin{tabular}{|l|l|}\hline
-	\textbf{}&\textbf{} \\ \hline \hline
-	$ 1 $ 	 & 	 $ 111.111 $ \\ \hline 
-	$ 2 $ 	 & 	 $ 110.000 $ \\ \hline 
-	$ 3 $ 	 & 	 $ 111.000 $ \\ \hline 
-	$ 4 $ 	 & 	 $ 112.100 $ \\ \hline 
-	$ 5 $ 	 & 	 $ 113.300 $ \\ \hline 
-	$ 6 $ 	 & 	 $ 114.500 $ \\ \hline 
-	$ 7 $ 	 & 	 $ 225.750 $ \\ \hline 
-	$ 8 $ 	 & 	 $ 666.600 $ \\ \hline 
-	$ 9 $ 	 & 	 $ 999.923 $ \\ \hline 
+	\textbf{Hodenkobold}&\textbf{Brot} \\ \hline \hline
+	$ 5 $ 	 & 	 $ 6.0 $ \\ \hline 
+	$ 3 $ 	 & 	 $ 4.0 $ \\ \hline 
+	$ 1 $ 	 & 	 $ 2.2 $ \\ \hline 
 	\end{tabular}
+\caption{1}
 \end{table}
